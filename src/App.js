@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Item from "./components/Item.js";
+import AddItem from "./components/AddItem.js";
 
 function App() {
+  const [items, setItems] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <header className="flex max-w-md mx-auto my-12">
+      <h1 className="text-4xl items-center justify-center mx-auto">Minimalist Todo</h1>
+    </header>
+    <div className="grid grid-cols-[1fr,min(480px),1fr] mx-auto container">
+      <div className="col-start-2">
+      <div className="container mx-auto px-2">
+        {items.map((item, key) => (
+          <Item key={key} listItem={item} itemDelete={index => {
+            // console.log(index.parentElement, key);
+            const newList = items;
+            const updateList = newList.splice(key, 1);
+            setItems([...newList]);
+            console.log('new List:', items);
+          }} />
+        ))}
+      </div>
+      <AddItem itemAdd={text => {setItems(items.concat(text))}} />
+      </div>
     </div>
+    </>
   );
 }
 
